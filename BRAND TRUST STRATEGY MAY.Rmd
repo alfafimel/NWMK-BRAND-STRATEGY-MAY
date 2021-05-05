@@ -1,0 +1,140 @@
+---
+title: "Newmark Analytics - BRAND TRUST"
+author: "Elizabeth Josephine"
+date: "03/05/2021"
+output: html_document
+---
+#DATA CHECKING
+
+```{R}
+# loading libraries
+library(relaimpo)
+library(data.table)
+library(ggplot2) # Data visualization
+library(ggthemes) # Plot themes
+library(plotly) # Interactive data visualizations
+library(dplyr) # Data manipulation
+library(psych) # Will be used for correlation visualization
+```
+
+```{R}
+# importing our data
+# reading our data
+
+library(readxl)
+df <- read_excel("E:/R/Brand trust strategy may.xlsx")
+df
+```
+
+## DATA CHECKING
+```{R}
+# previewing the dataset
+View(df)
+
+```
+
+```{R}
+# previewing the column names
+colnames(df)
+
+```
+
+```{R}
+# previewing the dataset
+class(df)
+
+```
+
+```{R}
+# previewing the datatypes of the dataset
+sapply(df, class)
+```
+
+```{R}
+# previewing the head of the dataset
+head(df, n = 5)
+
+```
+
+```{R}
+# previewing the tail of the dataset
+tail(df, n = 5)
+
+```
+
+```{R}
+# checking the structure of the data
+str(df)
+
+```
+
+```{R}
+# checking the dimension/shape of the data
+dim(df) # 219 rows and 33 columns
+```
+
+## DATA CLEANING
+### Missing Values
+``` {r}
+# checking for missing values
+sum(is.na(df))# there are 332 missing values in the data
+```
+
+```{R}
+df1 <- na.omit(df)
+dim(df1) #there are 110 rows and 33 columns
+#deleting columns with missing values
+#df1 <- df[ , colSums(is.na(df)) == 0]
+#sum(is.na(df1))
+```
+
+### Duplicates
+
+``` {r}
+# checking for duplicates
+duplicated_rows <- df1[duplicated(df1),]
+duplicated_rows # there is 1 duplicate in the data
+```
+
+``` {r}
+# showing these unique items and assigning to a variable unique_items below
+unique_items <- df1[!duplicated(df1), ]
+unique_items
+```
+
+```{R}
+#viewing the remaining columns
+colnames(df1)
+```
+
+```{R}
+View(df1)
+```
+
+```{r}
+# selecting the numerical data columns
+df2 <- df1 %>% select_if(is.numeric)
+df2
+```
+
+```{R}
+# visualizing any outliers in the data
+par (mfrow= c ( 3, 3))
+for (i in 1 : length (df2)) {
+boxplot (df2[,i], main= names (df2[i]), type= "l" )
+}
+```
+``` {r}
+# renaming columns for easy analysis
+#library(writexl)
+#write_xlsx(df2, "E:/NEWMARK GROUP LIMITED/brand_may.xlsx")
+```
+
+```{r}
+dim(df2) # 110 rows and 31 columns
+```
+
+
+
+
+
